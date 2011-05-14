@@ -1,0 +1,7 @@
+.zfproject.xml
+nbproject
+application/configs/application.ini
+data/cache/*
+data/uploads/*
+data/logs/*.log
+public/.htaccess
