@@ -1,6 +1,6 @@
-;;;;;;;;;;;;;;;;;;;;;;;
-; P R O D U C T I O N ;
-;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; P R O D U C T I O N
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 [production]
 ; PHP settings
 phpSettings.error_reporting         = 247
@@ -106,9 +106,9 @@ resources.view.charset                     = "UTF-8"
 resources.view.helperPath.Eve_View_Helper  = "Eve/View/Helper"
 resources.view.helperPath.Sc_View_Helper   = "Sc/View/Helper"
 
-;;;;;;;;;;;;;;;;;;;;;;;
-;;;; T E S T I N G ;;;;
-;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; T E S T I N G
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 [testing : production]
 ; PHP settings
 phpSettings.display_startup_errors  = 1
@@ -120,9 +120,9 @@ resources.doctrine.dbal.connections.default.parameters.host     = ""
 resources.doctrine.dbal.connections.default.parameters.user     = ""
 resources.doctrine.dbal.connections.default.parameters.password = ""
 
-;;;;;;;;;;;;;;;;;;;;;;;;;
-; D E V E L O P M E N T ;
-;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; D E V E L O P M E N T
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 [development : production]
 ; PHP settings
 phpSettings.display_startup_errors  = 1
