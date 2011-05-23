@@ -20,13 +20,25 @@ class Bootstrap
                 return $value;
             }
 
-            $_POST = array_map('stripslashes_deep', $_POST);
-            $_GET = array_map('stripslashes_deep', $_GET);
-            $_COOKIE = array_map('stripslashes_deep', $_COOKIE);
+            $_POST    = array_map('stripslashes_deep', $_POST);
+            $_GET     = array_map('stripslashes_deep', $_GET);
+            $_COOKIE  = array_map('stripslashes_deep', $_COOKIE);
             $_REQUEST = array_map('stripslashes_deep', $_REQUEST);
         }
     }
 
+    public function _initAutoloaderNamespaces() {
+        
+        require_once 'Doctrine/Common/ClassLoader.php';
+
+        $autoloader = Zend_Loader_Autoloader::getInstance();
+        $bisnaAutoloader = new \Doctrine\Common\ClassLoader('Bisna');
+        $autoloader->pushAutoloader(array($bisnaAutoloader, 'loadClass'), 'Bisna');
+        
+        $eveAutoloader = new \Doctrine\Common\ClassLoader('Eve');
+        $autoloader->pushAutoloader(array($eveAutoloader, 'loadClass'), 'Eve');
+    }
+    
     /**
      * Initialize module autoloader
      *
@@ -35,7 +47,7 @@ class Bootstrap
     public function _initModuleAutoloader() {
         $moduleAutoloader = new Zend_Application_Module_Autoloader(array(
             'namespace' => '',
-            'basePath' => APPLICATION_PATH. '/modules/core'
+            'basePath'  => APPLICATION_PATH. '/modules/core'
         ));
     }
 
@@ -62,40 +74,18 @@ class Bootstrap
      * @return void
      */
     protected function _initATranslate() {
-        
-        $this->bootstrap('translate');
-        $translate = $this->getResource('translate');
 
-        $options = $translate->getOptions();
-
-        // log untranslated strings
         if ($this->getEnvironment() == 'development') {
+            // log untranslated strings
+            $this->bootstrap('translate');
+            $translate = $this->getResource('translate');
             $logWriter = new Zend_Log_Writer_Firebug();
+            
+            $options = $translate->getOptions();
+            $options['log'] = new Zend_Log($logWriter);
+            
+            $translate->setOptions($options);
         }
-        else {
-            $logWriter = new Zend_Log_Writer_Stream(LOGS_PATH. '/translate.log', 'a');
-        }
-
-        $options['log'] = new Zend_Log($logWriter);
-
-        $translate->setOptions($options);
-    }
-
-    /**
-     * Disable translate caching in development env
-     */
-    protected function _initACachemanager() {
-        if ($this->getEnvironment() !== 'development') {
-            return;
-        }
-
-        $this->bootstrap('cachemanager');
-        $cachemanager = $this->getResource('cachemanager');
-        $cache = $cachemanager->getCache('lang');
-        $cache->setOption('caching', false);
-        $cache->setOption('lifetime', 1);
-
-        $cachemanager->setCache('lang', $cache);
     }
 
     /**

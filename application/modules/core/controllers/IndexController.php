@@ -1,16 +1,36 @@
 <?php
 
-class IndexController extends Zend_Controller_Action
+class IndexController extends Eve_Controller_Action
 {
-
-    public function init()
-    {
-        /* Initialize action controller here */
+    /**
+     *
+     * @var Bisna\Application\Container\DoctrineContainer
+     */
+    protected $_doctrine;
+    
+    public function init() {
+        
+        $this->_doctrine = Zend_Registry::get('doctrine');
     }
-
-    public function indexAction()
-    {
-        // action body
+    
+    public function indexAction() {
+        
+        $em = $this->_doctrine->getEntityManager();
+        
+//        $u = new Eve\Entity\User();
+//        $u->setName('Petr')
+//          ->setSurname('Novák')
+//          ->setEmail('martin@belobrad.cz')
+//          ->setAllowed(1);
+//        
+//        $em->persist($u);
+//        $em->flush();
+        
+        $u = $em->find('Eve\Entity\User', 1);
+        $u->setPass('abcdef');
+        
+        $em->persist($u);
+        $em->flush();
     }
 
 
