@@ -5,3 +5,4 @@ data/cache/*
 data/uploads/*
 data/logs/*.log
 public/.htaccess
+tests/data/test.db
