@@ -9,16 +9,16 @@ namespace Eve\Entity;
  */
 class GroupTest extends \ModelTestCase {
     
-    public function testCanCreateGroup() {
-        $this->assertInstanceOf('Eve\Entity\Group', new Group());
-    }
-    
     public static function groupProvider() {
         
         return array(
             array('Test group', 1),
             array('Lorem ipsum group', 0)
         );
+    }
+    
+    public function testCanCreateGroup() {
+        $this->assertInstanceOf('Eve\Entity\Group', new Group());
     }
     
     /**
@@ -52,6 +52,7 @@ class GroupTest extends \ModelTestCase {
         $u->setEmail('dfewfe@efefe.cd');
         $u->setName('Pepa');
         $u->setSurname('Novák');
+        $u->setPass(md5('dsfdsfsd'));
         $u->setAllowed(1);
         $em->persist($u);
         

@@ -81,9 +81,30 @@ class User extends \Eve\Entity {
      */
     public function validate() {
        
+        // email
         $emailValidator = new \Sc_Validate_Email();
         if (!$emailValidator->isValid($this->getEmail())) {
             throw new \Eve\Exception\Validate('Email is not valid');
+        }
+        
+        // pass
+        if (!$this->getPass()) {
+            throw new \Eve\Exception\Validate('Password is empty');
+        }
+        
+        // name
+        if (!$this->getName()) {
+            throw new \Eve\Exception\Validate('Name is empty');
+        }
+        
+        // surname
+        if (!$this->getSurname()) {
+            throw new \Eve\Exception\Validate('Surname is empty');
+        }
+        
+        // allowed
+        if (!is_bool($this->getAllowed())) {
+            $this->setAllowed((bool) $this->getAllowed());
         }
     }
     
