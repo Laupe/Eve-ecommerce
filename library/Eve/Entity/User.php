@@ -81,6 +81,10 @@ class User extends \Eve\Entity {
      */
     public function validate() {
        
+        $emailValidator = new \Sc_Validate_Email();
+        if (!$emailValidator->isValid($this->getEmail())) {
+            throw new \Eve\Exception\Validate('Email is not valid');
+        }
     }
     
     /**
@@ -102,5 +106,11 @@ class User extends \Eve\Entity {
     public function getGroup() {
         
         return $this->group;
+    }
+    
+    public function clearGroup() {
+        
+        $this->group->detachUser($this);
+        $this->group = null;
     }
 }

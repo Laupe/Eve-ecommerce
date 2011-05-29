@@ -10,7 +10,20 @@ namespace Eve\Entity;
 class UserTest extends \ModelTestCase {
     
     public function testCanCreateUser() {
+        
         $this->assertInstanceOf('Eve\Entity\User', new User());
+    }
+    
+    /**
+     * @expectedException \Eve\Exception\Validate
+     */
+    public function testCanCreateEmptyUser() {
+        
+        $em = $this->getDoctrineContainer()->getEntityManager();
+        $u = new User();
+        
+        $em->persist($u);
+        $em->flush();
     }
     
     public function testCanSaveUserAndRetrieveThem() {
@@ -34,5 +47,22 @@ class UserTest extends \ModelTestCase {
         $this->assertEquals('Lorem', $u->getName());
         $this->assertEquals('Ipsum', $u->getSurname());
         $this->assertEquals(true, $u->getAllowed());
+    }
+
+    /**
+     * @expectedException \Eve\Exception\Validate
+     */
+    public function testCanCreateUserWithInvalidEmail() {
+        
+        $em = $this->getDoctrineContainer()->getEntityManager();
+        $u = new User();
+        $u->setEmail('sdfsdfdfd.cz');
+        $u->setName('Lorem');
+        $u->setSurname('Ipsum');
+        $u->setPass(md5('dfsgfgf'));
+        $u->setAllowed(1);
+        $em->persist($u);
+        
+        $em->flush();
     }
 }

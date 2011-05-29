@@ -97,4 +97,14 @@ class Group extends \Eve\Entity {
         
         return false;
     }
+    
+    public function detachUser(User $user) {
+        
+        foreach($this->users as $key => $assignedUser) {
+            if ($assignedUser === $user) {
+                unset($this->users[$key]);
+                $user->clearGroup();
+            }
+        }
+    }
 }
