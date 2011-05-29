@@ -83,17 +83,22 @@ class User extends \Eve\Entity {
        
     }
     
+    /**
+     * Append user to group
+     * @param Group $group Group
+     */
     public function setGroup(Group $group) {
         
-        if ($this->group === $group) {
-            return $this;
+        if ($group !== $this->group) {
+            $this->group = $group;
+            $group->appendUser($this);
         }
-        
-        $group->appendUser($this);
-        $this->group = $group;
-        return $this;
     }
     
+    /**
+     * Return group with this user
+     * @return mixed
+     */
     public function getGroup() {
         
         return $this->group;

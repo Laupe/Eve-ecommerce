@@ -69,19 +69,32 @@ class Group extends \Eve\Entity {
         return $this;
     }
     
+    
+    /**
+     * Append user to group
+     * @param User $user User
+     */
     public function appendUser(User $user) {
         
-        $append = true;
-        foreach ($this->users as $appendedUser) {
-            if ($appendedUser === $user) {
-                $append = false;
+        if (!$this->isUserAssigned($user)) {
+            $this->users[] = $user;
+            $user->setGroup($this);
+        }
+    }
+    
+    /**
+     * User is assigned in this group?
+     * @param User $user User
+     * @return boolean
+     */
+    public function isUserAssigned(User $user) {
+        
+        foreach($this->users as $assignedUser) {
+            if ($assignedUser === $user) {
+                return true;
             }
         }
         
-        if ($append === true) {
-            $this->users[] = $user;
-        }
-        
-        return $this;
+        return false;
     }
 }

@@ -23,12 +23,15 @@ class ModelTestCase extends PHPUnit_Framework_TestCase {
         
         self::$_doctrineContainer = Zend_Registry::get('doctrine');
         
-        self::dropSchema(self::$_doctrineContainer->getConnection()->getParams());
+        $params = self::$_doctrineContainer->getConnection()->getParams();
+        self::dropSchema($params);
         
         $tool = new \Doctrine\ORM\Tools\SchemaTool( self::$_doctrineContainer->getEntityManager() );
         $metas = self::_getClassMetas( APPLICATION_PATH. '/../library/Eve/Entity', 'Eve\Entity\\' );
  
-        $tool->createSchema($metas);
+        if (!file_exists($params['path'])) {
+            $tool->createSchema($metas);
+        }
 
         parent::setUpBeforeClass();
     }
