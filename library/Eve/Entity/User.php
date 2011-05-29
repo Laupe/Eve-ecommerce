@@ -5,6 +5,7 @@ namespace Eve\Entity;
 /**
  * @author Martin Belobrad, Slam.CZ <info@slam.cz>
  * @Entity @Table(name="user")
+ * @HasLifecycleCallbacks
  */
 class User extends \Eve\Entity {
     
@@ -47,12 +48,12 @@ class User extends \Eve\Entity {
     private $allowed;
     
     /**
-     * @var integer
+     * @var Group
      * @manyToOne(targetEntity="Group", inversedBy="users")
      * @joinColumn(name="group_id", referencedColumnName="id")
      */
     private $group;
-    
+
     /**
      * Getter
      * @param string $name
@@ -73,5 +74,28 @@ class User extends \Eve\Entity {
         
         $this->$name = $value;
         return $this;
+    }
+    
+    /**
+     * @PrePersist @PreUpdate
+     */
+    public function validate() {
+       
+    }
+    
+    public function setGroup(Group $group) {
+        
+        if ($this->group === $group) {
+            return $this;
+        }
+        
+        $group->appendUser($this);
+        $this->group = $group;
+        return $this;
+    }
+    
+    public function getGroup() {
+        
+        return $this->group;
     }
 }

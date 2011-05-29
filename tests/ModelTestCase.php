@@ -59,4 +59,13 @@ class ModelTestCase extends PHPUnit_Framework_TestCase {
             unlink($params['path']);
         }
     }
+    
+    /**
+     * Return Doctrine container
+     * @return \Bisna\Application\Container\DoctrineContainer
+     */
+    public function getDoctrineContainer() {
+        
+        return self::$_doctrineContainer;
+    }
 }

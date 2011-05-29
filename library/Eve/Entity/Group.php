@@ -1,10 +1,12 @@
 <?php
 
 namespace Eve\Entity;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @author Martin Belobrad, Slam.CZ <info@slam.cz>
  * @Entity @Table(name="user_group")
+ * @HasLifecycleCallbacks
  */
 class Group extends \Eve\Entity {
     
@@ -33,6 +35,18 @@ class Group extends \Eve\Entity {
      */
     private $users;
     
+    public function __construct() {
+        
+        $this->users = new ArrayCollection();
+    }
+    
+    /**
+     * @PrePersist @PreUpdate
+     */
+    public function validate() {
+
+    }
+    
     /**
      * Getter
      * @param string $name
@@ -52,6 +66,22 @@ class Group extends \Eve\Entity {
     public function __set($name, $value) {
         
         $this->$name = $value;
+        return $this;
+    }
+    
+    public function appendUser(User $user) {
+        
+        $append = true;
+        foreach ($this->users as $appendedUser) {
+            if ($appendedUser === $user) {
+                $append = false;
+            }
+        }
+        
+        if ($append === true) {
+            $this->users[] = $user;
+        }
+        
         return $this;
     }
 }

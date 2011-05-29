@@ -5,6 +5,7 @@ namespace Eve\Entity;
 /**
  * @author Martin Belobrad, Slam.CZ <info@slam.cz>
  * @Entity @Table(name="user_role")
+ * @HasLifecycleCallbacks
  */
 class Role extends \Eve\Entity {
     
@@ -27,6 +28,13 @@ class Role extends \Eve\Entity {
      * @Column(name="allowed", type="boolean", nullable=false) 
      */
     private $allowed;
+    
+    /**
+     * @PrePersist @PreUpdate
+     */
+    public function validate() {
+
+    }
     
     /**
      * Getter
